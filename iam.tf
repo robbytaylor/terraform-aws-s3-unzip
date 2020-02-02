@@ -37,7 +37,7 @@ data aws_iam_policy_document lambda {
     ]
 
     resources = [
-      "arn:aws:s3:::${var.dest_bucket}/${var.dest_prefix}*"
+      "arn:aws:s3:::${local.dest_bucket}/${var.dest_prefix}*"
     ]
   }
 

@@ -2,7 +2,7 @@ data template_file lambda {
   template = "${file("${path.module}/index.js.tpl")}"
 
   vars = {
-    dest_bucket = var.dest_bucket
+    dest_bucket = local.dest_bucket
     dest_key    = var.dest_key
     dest_prefix = var.dest_prefix
     match_regex = var.match_regex
@@ -31,8 +31,8 @@ resource aws_lambda_function lambda {
   filename      = data.archive_file.lambda.output_path
   function_name = var.lambda_function_name
   role          = aws_iam_role.lambda.arn
-  handler       = var.lambda_handler
-  runtime       = var.lambda_runtime
+  handler       = "index.handler"
+  runtime       = "nodejs10.x"
 
   tags = var.tags
 }
