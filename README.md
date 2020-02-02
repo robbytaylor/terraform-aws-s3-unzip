@@ -7,6 +7,7 @@ By default the Lambda function is run when a file is created in the specified S3
 
 ### Extract all files in the same bucket
 
+```
 module s3-unzip {
   source         = "robbytaylor/s3-unzip/aws"
   version        = "0.1.1"
@@ -16,9 +17,11 @@ module s3-unzip {
   src_bucket     = "files.robbytaylor.io"
   src_prefix     = "zip/"
 }
+```
 
 ### Extract .js files from one bucket to another
 
+```
 module s3-unzip {
   source         = "robbytaylor/s3-unzip/aws"
   version        = "0.1.1"
@@ -27,9 +30,11 @@ module s3-unzip {
   src_bucket     = "zip.robbytaylor.io"
   match_regex    = "/^[^/]+.js$/"
 }
+```
 
 ### Extract .js files from one bucket to another
 
+```
 module s3-unzip {
   source         = "robbytaylor/s3-unzip/aws"
   version        = "0.1.1"
@@ -38,3 +43,4 @@ module s3-unzip {
   src_bucket     = "zip.robbytaylor.io"
   match_regex    = "/^[^/]+.js$/"
 }
+```
