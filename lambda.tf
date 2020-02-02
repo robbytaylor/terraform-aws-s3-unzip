@@ -12,6 +12,10 @@ data template_file lambda {
 resource local_file lambda {
   content  = data.template_file.lambda.rendered
   filename = "${path.module}/src/index.js"
+
+  lifecycle {
+    ignore_changes = [filename]
+  }
 }
 
 resource null_resource npm {
