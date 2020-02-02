@@ -52,5 +52,5 @@ variable tags {
 }
 
 locals {
-  dest_bucket = var.dest_bucket ? var.dest_bucket : var.src_bucet
+  dest_bucket = var.dest_bucket != "" ? var.dest_bucket : var.src_bucket
 }
