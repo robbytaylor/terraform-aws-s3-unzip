@@ -39,6 +39,12 @@ variable match_regex {
   description = "Regular expression to match against filenames within the zip file. Use to only extract certain files"
 }
 
+variable s3_event_triggers {
+  type        = list(string)
+  default     = ["s3:ObjectCreated:*"]
+  description = "Which S3 events to trigger the Lambda function from"
+}
+
 variable src_prefix {
   type        = string
   default     = ""
