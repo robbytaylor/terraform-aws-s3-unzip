@@ -34,6 +34,10 @@ resource aws_lambda_function lambda {
   handler       = "index.handler"
   runtime       = "nodejs10.x"
 
+  lifecycle {
+    ignore_changes = [filename]
+  }
+
   tags = var.tags
 }
 
