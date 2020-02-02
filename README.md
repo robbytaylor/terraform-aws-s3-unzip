@@ -1,5 +1,5 @@
 # Terraform AWS S3 Unzip
-Terraform module to deploy a Lambda function to automatically unzip files in an S3 bucket.
+Terraform module to deploy a Lambda function to automatically extract zip files in an S3 bucket.
 
 By default the Lambda function is run when a file is created in the specified S3 bucket.
 
