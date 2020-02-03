@@ -10,7 +10,7 @@ By default the Lambda function is run when a file is created in the specified S3
 ```
 module s3-unzip {
   source         = "robbytaylor/s3-unzip/aws"
-  version        = "0.1.5"
+  version        = "0.2.0"
 
   dest_prefix    = "extracted/"
   dest_key       = "$zipFilename/$filename.$extension"
@@ -24,7 +24,7 @@ module s3-unzip {
 ```
 module s3-unzip {
   source         = "robbytaylor/s3-unzip/aws"
-  version        = "0.1.5"
+  version        = "0.2.0"
 
   dest_bucket    = "js.robbytaylor.io"
   src_bucket     = "zip.robbytaylor.io"
@@ -37,7 +37,7 @@ module s3-unzip {
 ```
 module s3-unzip {
   source         = "robbytaylor/s3-unzip/aws"
-  version        = "0.1.5"
+  version        = "0.2.0"
 
   dest_key       = "$zipFilename.$extension"
   src_bucket     = "code.robbytaylor.io"
