@@ -1,23 +1,3 @@
-data template_file lambda {
-  template = "${file("${path.module}/index.js.tpl")}"
-
-  vars = {
-    dest_bucket = local.dest_bucket
-    dest_key    = var.dest_key
-    dest_prefix = var.dest_prefix
-    match_regex = var.match_regex
-  }
-}
-
-resource local_file lambda {
-  content  = data.template_file.lambda.rendered
-  filename = "${path.module}/src/index.js"
-
-  lifecycle {
-    ignore_changes = [filename]
-  }
-}
-
 resource null_resource npm {
   provisioner "local-exec" {
     command = "cd ${path.module}/src && npm install"
@@ -26,9 +6,9 @@ resource null_resource npm {
 
 data archive_file lambda {
   type        = "zip"
-  output_path = "${path.module}/dist/lambda-${sha1(data.template_file.lambda.rendered)}.zip"
+  output_path = "${path.module}/dist/lambda.zip"
   source_dir  = "${path.module}/src"
-  depends_on  = [local_file.lambda, null_resource.npm]
+  depends_on  = [null_resource.npm]
 }
 
 resource aws_lambda_function lambda {
@@ -40,6 +20,15 @@ resource aws_lambda_function lambda {
 
   lifecycle {
     ignore_changes = [filename]
+  }
+
+  environment {
+    variables = {
+      DEST_BUCKET : local.dest_bucket
+      DEST_KEY : var.dest_key
+      DEST_PREFIX : var.dest_prefix
+      MATCH_REGEX : var.match_regex
+    }
   }
 
   tags = var.tags
