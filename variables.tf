@@ -24,7 +24,7 @@ variable delete_source {
 variable dest_key {
   type        = string
   default     = ""
-  description = "Key name to use for the unzipped files. Defaults to the filename within the archive. "
+  description = "Key name to use for the unzipped files. Defaults to the filename within the archive"
 }
 
 variable dest_prefix {
