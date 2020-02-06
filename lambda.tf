@@ -1,26 +1,33 @@
 resource null_resource npm {
+  triggers = {
+    index = "${base64sha256(file("${path.module}/src/package.json"))}"
+  }
+
   provisioner "local-exec" {
     command = "cd ${path.module}/src && npm install"
+  }
+}
+
+data null_data_source wait_for_lambda_exporter {
+  inputs = {
+    lambda_exporter_id = null_resource.npm.id
+    source_dir         = "${path.module}/src/"
   }
 }
 
 data archive_file lambda {
   type        = "zip"
   output_path = "${path.module}/dist/lambda.zip"
-  source_dir  = "${path.module}/src"
-  depends_on  = [null_resource.npm]
+  source_dir  = data.null_data_source.wait_for_lambda_exporter.outputs["source_dir"]
 }
 
 resource aws_lambda_function lambda {
-  filename      = data.archive_file.lambda.output_path
-  function_name = var.lambda_function_name
-  role          = aws_iam_role.lambda.arn
-  handler       = "index.handler"
-  runtime       = "nodejs10.x"
-
-  lifecycle {
-    ignore_changes = [filename]
-  }
+  filename         = data.archive_file.lambda.output_path
+  function_name    = var.lambda_function_name
+  role             = aws_iam_role.lambda.arn
+  handler          = "index.handler"
+  runtime          = "nodejs10.x"
+  source_code_hash = data.archive_file.lambda.output_base64sha256
 
   environment {
     variables = {
