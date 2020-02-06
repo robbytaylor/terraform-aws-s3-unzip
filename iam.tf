@@ -42,9 +42,9 @@ data aws_iam_policy_document lambda {
   }
 
   statement {
-    actions = [
-      "s3:GetObject"
-    ]
+    actions = concat(["s3:GetObject"],
+      var.delete_source ? ["s3:DeleteObject"] : []
+    )
 
     resources = [
       "arn:aws:s3:::${var.src_bucket}/${var.src_prefix}*"

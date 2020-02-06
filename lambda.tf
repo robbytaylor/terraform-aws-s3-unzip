@@ -31,6 +31,7 @@ resource aws_lambda_function lambda {
 
   environment {
     variables = {
+      DELETE_SOURCE : var.delete_source
       DEST_BUCKET : local.dest_bucket
       DEST_KEY : var.dest_key
       DEST_PREFIX : var.dest_prefix

@@ -15,6 +15,12 @@ variable cloudwatch_log_retention {
   description = "Number of days to retain logs for the Unzip Lambda function"
 }
 
+variable delete_source {
+  type        = bool
+  default     = false
+  description = "Whether the source file should be deleted after extraction"
+}
+
 variable dest_key {
   type        = string
   default     = ""
